@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>E³ HQ — Portfolio Museum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="hq.css">
+<style>:root{--accent:#ff9f43;--accent-dim:rgba(255,159,67,0.10);--accent-border:rgba(255,159,67,0.25);}</style>
+<script>
+window.ROOM_CONFIG = {
+  id: 'case-studies',
+  items: [
+    {
+      type: 'panel',
+      img: 'https://images.unsplash.com/photo-1541643600914-78b084683702?w=800&q=80',
+      title: 'Beverly Hills Scents',
+      subtitle: 'Luxury e-commerce · Abuja',
+      tag: 'E-Commerce',
+      body: 'A premium dark-luxury e-commerce platform for a high-end perfumery brand in Abuja. Features a Scent Finder Quiz, WhatsApp checkout, performance-optimised product pages, and a gold/obsidian design system.',
+      tags: ['E-Commerce', 'Dark Luxury', 'WhatsApp', 'Scent Quiz', 'Abuja'],
+      listItems: [
+        { label: 'Custom product catalog' },
+        { label: 'AI-assisted Scent Finder' },
+        { label: 'WhatsApp order integration' },
+        { label: 'Mobile-first checkout' }
+      ],
+      cta: { label: 'Start a Similar Project →', href: 'contact.html' }
+    },
+    {
+      type: 'panel',
+      img: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&q=80',
+      title: 'Esmeralda Beauty',
+      subtitle: 'Salon & Spa platform · Gwarinpa',
+      tag: 'Service Business',
+      body: 'Full-featured website for a premium salon and spa in Gwarinpa, Abuja. Service cart, WhatsApp checkout flow, booking modals, and passed a 52-point QA verification.',
+      tags: ['Beauty', 'Booking', 'WhatsApp', 'Cart', '52-Point QA'],
+      listItems: [
+        { label: 'Service booking system' },
+        { label: 'Cart + WhatsApp checkout' },
+        { label: 'Gallery and portfolio' },
+        { label: '52-point QA verified' }
+      ],
+      cta: { label: 'Build a Service Site →', href: 'contact.html' }
+    },
+    {
+      type: 'panel',
+      img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80',
+      title: 'Iron Mint Stewardship',
+      subtitle: '10-page enterprise website',
+      tag: 'Enterprise',
+      body: 'A 10-page enterprise website for a stewardship and management firm. Gold/black/white palette with branch-specific accent colors. Programmatic audit confirmed zero issues across all pages.',
+      tags: ['Enterprise', 'Multi-Page', 'Zero Defects', 'Gold/Black'],
+      listItems: [
+        { label: '10 fully built pages' },
+        { label: 'Branch-specific accents' },
+        { label: 'Programmatic zero-issue audit' },
+        { label: 'Executive brand system' }
+      ],
+      cta: { label: 'Build Your Enterprise Site →', href: 'contact.html' }
+    },
+    {
+      type: 'panel',
+      img: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&q=80',
+      title: 'E³ SaaS Platform',
+      subtitle: 'Internal web application',
+      tag: 'SaaS',
+      body: 'A full production SaaS web application with Supabase backend, dark luxury design system, and a complete rebuild resolving 28 issues including security, mobile UX, and accessibility compliance.',
+      tags: ['SaaS', 'Supabase', 'Auth', 'Security', 'Accessibility'],
+      listItems: [
+        { label: 'Supabase backend integration' },
+        { label: '28-issue resolution audit' },
+        { label: 'Role-based access control' },
+        { label: 'Full mobile responsiveness' }
+      ],
+      cta: { label: 'Build a SaaS Platform →', href: 'contact.html' }
+    },
+    {
+      type: 'panel',
+      img: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80',
+      title: 'Topspace Tech Retail',
+      subtitle: 'Computer Village · Ikeja Lagos',
+      tag: 'Tech Retail',
+      body: 'A unified tech retail platform for phones and laptops with a shared cart system, product modals, and WhatsApp ordering. Built for Computer Village\'s fast-moving inventory environment.',
+      tags: ['Tech Retail', 'Cart', 'Modals', 'Lagos', 'WhatsApp'],
+      listItems: [
+        { label: 'Phones + laptops catalog' },
+        { label: 'Unified cart system' },
+        { label: 'Product detail modals' },
+        { label: 'WhatsApp order funnel' }
+      ],
+      cta: { label: 'Build a Retail Platform →', href: 'contact.html' }
+    }
+  ]
+};
+</script>
+</head>
+<body>
+<div id="loader">
+  <div class="loader-logo">E<span>³</span></div>
+  <div class="loader-tagline">Portfolio Museum</div>
+  <div class="loader-bar"><div class="loader-bar-fill" id="load-bar"></div></div>
+  <div class="loader-pct" id="load-pct">0%</div>
+</div>
+<div id="canvas-wrap"></div>
+<div id="room-transition" style="opacity:1;pointer-events:all;background:#04050a;position:fixed;inset:0;z-index:150;"></div>
+<div id="topbar">
+  <div class="hq-logo" style="cursor:pointer">E<span>³</span></div>
+  <div class="room-name">📁 Portfolio Museum</div>
+  <button class="hq-hamburger" aria-label="Navigation"><span></span><span></span><span></span></button>
+</div>
+<button id="back-btn">← Back</button>
+<div id="nav-drawer">
+  <div class="nav-section-label">Navigate the HQ</div>
+  <div class="nav-room-list" id="nav-room-list"></div>
+  <a class="nav-contact-btn" onclick="window.location.href='contact.html'">Start a Project</a>
+</div>
+<div id="hud">
+  <span class="hud-hint">↑↓ Walk the corridor</span>
+  <span class="hud-dot"></span>
+  <span class="hud-hint">Click exhibits to view details</span>
+</div>
+<div id="mini-nav"><div class="mini-nav-inner" id="mini-nav-inner"></div></div>
+<div id="tooltip"></div>
+<div id="info-panel">
+  <div class="panel-tag" id="panel-tag"></div>
+  <div class="panel-title" id="panel-title"></div>
+  <div class="panel-subtitle" id="panel-subtitle"></div>
+  <div class="panel-divider"></div>
+  <div class="panel-body" id="panel-body"></div>
+  <div class="panel-tags" id="panel-tags"></div>
+  <div class="panel-items" id="panel-items"></div>
+  <a class="panel-cta" id="panel-cta"></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="hq.js"></script>
+</body>
+</html>
