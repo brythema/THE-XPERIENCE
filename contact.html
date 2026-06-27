@@ -2,146 +2,60 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#04050a">
 <title>E³ HQ — Executive Rooftop</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="hq.css">
 <style>
 :root{--accent:#c9a84c;--accent-dim:rgba(201,168,76,0.12);--accent-border:rgba(201,168,76,0.28);}
-
-#contact-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 80px 24px 80px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.9s cubic-bezier(0.23,1,0.32,1);
-}
-#contact-overlay.visible { opacity: 1; pointer-events: all; }
-
-.contact-card {
-  background: rgba(4,5,10,0.88);
-  backdrop-filter: blur(44px) saturate(0.65);
-  -webkit-backdrop-filter: blur(44px) saturate(0.65);
-  border: 1px solid rgba(201,168,76,0.16);
-  width: 100%;
-  max-width: 520px;
-  padding: 44px 40px 40px;
-  overflow-y: auto;
-  max-height: calc(100vh - 120px);
-}
-.contact-card::-webkit-scrollbar { width: 2px; }
-.contact-card::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.2); }
-
-.contact-eyebrow { font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: #c9a84c; margin-bottom: 10px; }
-.contact-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(22px,4vw,34px); font-weight: 800; color: #e8e0cc; line-height: 1.15; margin-bottom: 8px; letter-spacing: -0.02em; }
-.contact-sub { font-size: 13px; color: rgba(232,224,204,0.38); margin-bottom: 32px; line-height: 1.6; }
-
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-.form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
-.form-group label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(232,224,204,0.32); }
-.form-group input,.form-group select,.form-group textarea {
-  background: rgba(255,255,255,0.025);
-  border: 1px solid rgba(255,255,255,0.06);
-  color: #e8e0cc;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  padding: 12px 14px;
-  outline: none;
-  transition: border-color 0.2s;
-  width: 100%;
-  border-radius: 0;
-  -webkit-appearance: none;
-  appearance: none;
-}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus { border-color: rgba(201,168,76,0.45); }
-.form-group select option { background: #0a0d18; color: #e8e0cc; }
-.form-group textarea { resize: vertical; min-height: 100px; }
-
-.submit-btn {
-  width: 100%;
-  background: none;
-  border: 1px solid rgba(201,168,76,0.38);
-  color: #c9a84c;
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  padding: 15px 24px;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
-  margin-top: 8px;
-}
-.submit-btn:hover { background: rgba(201,168,76,0.08); border-color: #c9a84c; color: #e8c96a; }
-
-.contact-links { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.05); }
-.contact-link-row { display: flex; align-items: center; gap: 12px; text-decoration: none; color: rgba(232,224,204,0.38); font-size: 13px; transition: color 0.2s; }
-.contact-link-row:hover { color: #e8e0cc; }
-.contact-link-icon { color: #c9a84c; font-size: 14px; width: 20px; }
-
-.success-msg { display: none; text-align: center; padding: 32px 0; }
-.success-msg.show { display: block; }
-.success-icon { font-size: 36px; margin-bottom: 16px; }
-.success-title { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: #e8e0cc; margin-bottom: 8px; }
-.success-sub { font-size: 13px; color: rgba(232,224,204,0.38); margin-bottom: 24px; }
-.success-wa { display: inline-block; border: 1px solid rgba(201,168,76,0.35); color: #c9a84c; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; padding: 12px 24px; text-decoration: none; transition: background 0.2s; }
-.success-wa:hover { background: rgba(201,168,76,0.08); }
-
-@media (max-width: 520px) { .contact-card { padding: 28px 18px 28px; } .form-row { grid-template-columns: 1fr; } }
-@media (max-width: 768px) { #contact-overlay { padding: 68px 14px 100px; align-items: flex-start; overflow-y: auto; } .contact-card { max-height: none; } }
+#contact-overlay{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;padding:72px 20px 80px;pointer-events:none;opacity:0;transition:opacity 0.9s cubic-bezier(0.23,1,0.32,1);}
+#contact-overlay.visible{opacity:1;pointer-events:all;}
+.contact-card{background:rgba(4,5,10,0.90);backdrop-filter:blur(44px) saturate(0.65);-webkit-backdrop-filter:blur(44px) saturate(0.65);border:1px solid rgba(201,168,76,0.15);width:100%;max-width:500px;padding:36px 32px 36px;overflow-y:auto;max-height:calc(100vh - 130px);}
+.contact-card::-webkit-scrollbar{width:2px;}
+.contact-card::-webkit-scrollbar-thumb{background:rgba(201,168,76,0.2);}
+.contact-eyebrow{font-size:10px;letter-spacing:0.32em;text-transform:uppercase;color:#c9a84c;margin-bottom:8px;}
+.contact-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(20px,4vw,30px);font-weight:800;color:#e8e0cc;line-height:1.15;margin-bottom:6px;letter-spacing:-0.02em;}
+.contact-sub{font-size:13px;color:rgba(232,224,204,0.36);margin-bottom:28px;line-height:1.6;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.form-group{display:flex;flex-direction:column;gap:5px;margin-bottom:10px;}
+.form-group label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,224,204,0.3);}
+.form-group input,.form-group select,.form-group textarea{background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.06);color:#e8e0cc;font-family:'Inter',sans-serif;font-size:14px;padding:11px 13px;outline:none;transition:border-color 0.2s;width:100%;border-radius:0;-webkit-appearance:none;appearance:none;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:rgba(201,168,76,0.45);}
+.form-group select option{background:#0a0d18;color:#e8e0cc;}
+.form-group textarea{resize:vertical;min-height:90px;}
+.submit-btn{width:100%;background:none;border:1px solid rgba(201,168,76,0.38);color:#c9a84c;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;padding:14px 24px;cursor:pointer;transition:background 0.2s,border-color 0.2s,color 0.2s;margin-top:6px;}
+.submit-btn:hover{background:rgba(201,168,76,0.08);border-color:#c9a84c;color:#e8c96a;}
+.contact-links{display:flex;flex-direction:column;gap:10px;margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.05);}
+.contact-link-row{display:flex;align-items:center;gap:11px;text-decoration:none;color:rgba(232,224,204,0.36);font-size:13px;transition:color 0.2s;padding:4px 0;}
+.contact-link-row:hover{color:#e8e0cc;}
+.contact-link-icon{color:#c9a84c;font-size:14px;width:20px;flex-shrink:0;}
+.success-msg{display:none;text-align:center;padding:32px 0;}
+.success-msg.show{display:block;}
+.success-icon{font-size:34px;margin-bottom:14px;}
+.success-title{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#e8e0cc;margin-bottom:7px;}
+.success-sub{font-size:13px;color:rgba(232,224,204,0.36);margin-bottom:22px;}
+.success-wa{display:inline-block;border:1px solid rgba(201,168,76,0.35);color:#c9a84c;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;padding:11px 22px;text-decoration:none;transition:background 0.2s;}
+.success-wa:hover{background:rgba(201,168,76,0.08);}
+@media(max-width:480px){.contact-card{padding:24px 16px 28px;}.form-row{grid-template-columns:1fr;}}
+@media(max-width:768px){#contact-overlay{padding:68px 12px 100px;align-items:flex-start;overflow-y:auto;}.contact-card{max-height:none;}}
 </style>
 <script>
 window.ROOM_CONFIG = {
   id: 'contact',
   items: [
-    {
-      type: 'panel',
-      img: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=80',
-      title: 'Start a Project',
-      subtitle: 'Let\'s build something exceptional',
-      tag: 'Contact E³',
-      body: 'Tell us what you\'re building. We\'ll tell you how we\'d approach it. Every great product started with a conversation.',
-      tags: ['Quick Response', 'Abuja, Nigeria', '< 24hr Reply'],
-      cta: { label: 'Open Contact Form', href: '#form' }
-    },
-    {
-      type: 'panel',
-      img: 'https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=800&q=80',
-      title: 'WhatsApp Direct',
-      subtitle: 'Fastest response channel',
-      tag: 'Connect',
-      body: 'Message us directly on WhatsApp. We\'re typically available Monday–Saturday, 9am–8pm WAT. Most messages get a response within the hour.',
-      tags: ['+234 704 277 6167', 'Mon–Sat', '9am–8pm WAT'],
-      cta: { label: 'Open WhatsApp →', href: 'https://wa.me/2347042776167' }
-    },
-    {
-      type: 'panel',
-      img: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',
-      title: 'Abuja, Nigeria',
-      subtitle: 'Our home base',
-      tag: 'Location',
-      body: 'We are based in Abuja, FCT, Nigeria — and work with clients across Nigeria and the broader African continent. Remote projects welcome.',
-      tags: ['Abuja FCT', 'Nigeria', 'Remote-Friendly', 'Pan-African'],
-      cta: { label: 'Get Directions →', href: 'https://maps.google.com/?q=Abuja+FCT+Nigeria' }
-    }
+    { img:'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=900&q=80', title:'Start a Project', subtitle:'Let\'s build something exceptional', tag:'Contact E³', body:'Tell us what you\'re building. We\'ll tell you how we\'d approach it. Every great product started with a conversation.', tags:['Quick Response','Abuja, Nigeria','< 24hr Reply'], cta:{label:'Open Contact Form',href:'#form'} },
+    { img:'https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=900&q=80', title:'WhatsApp Direct', subtitle:'Fastest response channel', tag:'Connect', body:'Message us directly on WhatsApp. Available Monday–Saturday, 9am–8pm WAT. Most messages get a response within the hour.', tags:['+234 704 277 6167','Mon–Sat','9am–8pm WAT'], cta:{label:'Open WhatsApp →',href:'https://wa.me/2347042776167'} },
+    { img:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80', title:'Abuja, Nigeria', subtitle:'Our home base', tag:'Location', body:'Based in Abuja, FCT, Nigeria — working with clients across Nigeria and the broader African continent. Remote projects always welcome.', tags:['Abuja FCT','Nigeria','Remote-Friendly','Pan-African'], cta:{label:'Get Directions →',href:'https://maps.google.com/?q=Abuja+FCT+Nigeria'} }
   ]
 };
 </script>
 </head>
 <body>
-<div id="loader">
-  <div class="loader-logo">E<span>³</span></div>
-  <div class="loader-tagline">Executive Rooftop</div>
-  <div class="loader-bar"><div class="loader-bar-fill" id="load-bar"></div></div>
-  <div class="loader-pct" id="load-pct">0%</div>
-</div>
+<div id="loader"><div class="loader-logo">E<span>³</span></div><div class="loader-tagline">Executive Rooftop</div><div class="loader-bar"><div class="loader-bar-fill" id="load-bar"></div></div><div class="loader-pct" id="load-pct">0%</div></div>
 <div id="canvas-wrap"></div>
-<div id="room-transition" style="opacity:1;pointer-events:all;background:#04050a;position:fixed;inset:0;z-index:150;"></div>
+<div id="room-transition" style="position:fixed;inset:0;z-index:150;background:#04050a;opacity:1;pointer-events:all;"></div>
 
 <!-- CONTACT FORM OVERLAY -->
 <div id="contact-overlay">
@@ -152,56 +66,34 @@ window.ROOM_CONFIG = {
       <div class="contact-sub">Tell us what you need. We respond within 24 hours.</div>
       <form onsubmit="handleContactSubmit(event)" id="hq-contact-form" novalidate>
         <div class="form-row">
-          <div class="form-group">
-            <label for="cName">Full Name *</label>
-            <input id="cName" type="text" placeholder="Your name" required>
-          </div>
-          <div class="form-group">
-            <label for="cEmail">Email *</label>
-            <input id="cEmail" type="email" placeholder="you@company.com" required>
-          </div>
+          <div class="form-group"><label for="cName">Full Name *</label><input id="cName" type="text" placeholder="Your name" required autocomplete="name"></div>
+          <div class="form-group"><label for="cEmail">Email *</label><input id="cEmail" type="email" placeholder="you@company.com" required autocomplete="email"></div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label for="cPhone">Phone / WhatsApp</label>
-            <input id="cPhone" type="tel" placeholder="+234 xxx xxx xxxx">
-          </div>
-          <div class="form-group">
-            <label for="cService">Service Needed</label>
+          <div class="form-group"><label for="cPhone">WhatsApp / Phone</label><input id="cPhone" type="tel" placeholder="+234 xxx xxx xxxx" autocomplete="tel"></div>
+          <div class="form-group"><label for="cService">Service Needed</label>
             <select id="cService">
               <option value="">— Select —</option>
-              <option>AI Automation</option>
-              <option>Custom Website</option>
-              <option>Mobile App</option>
-              <option>SaaS Platform</option>
-              <option>Digital Strategy</option>
-              <option>Other</option>
+              <option>AI Automation</option><option>Custom Website</option>
+              <option>Mobile App</option><option>SaaS Platform</option>
+              <option>Digital Strategy</option><option>Other</option>
             </select>
           </div>
         </div>
-        <div class="form-group">
-          <label for="cMsg">Tell us about your project *</label>
-          <textarea id="cMsg" placeholder="Describe what you want to build, your timeline, and any specific requirements..." required></textarea>
-        </div>
+        <div class="form-group"><label for="cMsg">Tell us about your project *</label><textarea id="cMsg" placeholder="Describe what you want to build, your timeline, and any specific requirements..." required></textarea></div>
         <button type="submit" class="submit-btn">Send Message</button>
       </form>
       <div class="contact-links">
-        <a class="contact-link-row" href="https://wa.me/2347042776167" target="_blank">
-          <span class="contact-link-icon">💬</span><span>WhatsApp: +234 704 277 6167</span>
-        </a>
-        <a class="contact-link-row" href="mailto:hello@e3sme.com">
-          <span class="contact-link-icon">✉</span><span>hello@e3sme.com</span>
-        </a>
-        <a class="contact-link-row" href="https://maps.google.com/?q=Abuja+FCT+Nigeria" target="_blank">
-          <span class="contact-link-icon">📍</span><span>Abuja, FCT, Nigeria</span>
-        </a>
+        <a class="contact-link-row" href="https://wa.me/2347042776167" target="_blank" rel="noopener"><span class="contact-link-icon">💬</span><span>WhatsApp: +234 704 277 6167</span></a>
+        <a class="contact-link-row" href="mailto:hello@e3sme.com"><span class="contact-link-icon">✉</span><span>hello@e3sme.com</span></a>
+        <a class="contact-link-row" href="https://maps.google.com/?q=Abuja+FCT+Nigeria" target="_blank" rel="noopener"><span class="contact-link-icon">📍</span><span>Abuja, FCT, Nigeria</span></a>
       </div>
     </div>
     <div class="success-msg" id="success-msg">
       <div class="success-icon">◆</div>
       <div class="success-title">Message Received</div>
       <div class="success-sub">We'll respond within 24 hours.<br>Or reach us instantly on WhatsApp.</div>
-      <a class="success-wa" id="success-wa-link" href="https://wa.me/2347042776167" target="_blank">Continue on WhatsApp →</a>
+      <a class="success-wa" id="success-wa-link" href="https://wa.me/2347042776167" target="_blank" rel="noopener">Continue on WhatsApp →</a>
     </div>
   </div>
 </div>
@@ -209,61 +101,60 @@ window.ROOM_CONFIG = {
 <div id="topbar">
   <div class="hq-logo" style="cursor:pointer">E<span>³</span></div>
   <div class="room-name">✉️ Executive Rooftop</div>
-  <button class="hq-hamburger" aria-label="Navigation"><span></span><span></span><span></span></button>
+  <div class="topbar-right">
+    <button id="sound-btn" aria-label="Toggle sound">♩</button>
+    <button class="hq-hamburger" aria-label="Navigation"><span></span><span></span><span></span></button>
+  </div>
 </div>
 <button id="back-btn">← Back</button>
-<div id="nav-drawer">
-  <div class="nav-section-label">Navigate the HQ</div>
-  <div class="nav-room-list" id="nav-room-list"></div>
-  <a class="nav-contact-btn" onclick="window.location.href='contact.html'">Start a Project</a>
+
+<div id="card-overlay" role="dialog" aria-modal="true">
+  <div id="card-backdrop"></div>
+  <div class="card-sheet">
+    <div class="card-handle"></div>
+    <div class="card-img-wrap"><img id="card-img" src="" alt="" loading="lazy"><button id="card-close" aria-label="Close">✕</button></div>
+    <div class="card-content">
+      <div class="card-tag-label" id="card-tag"></div><div class="card-title" id="card-title"></div>
+      <div class="card-subtitle" id="card-subtitle"></div><div class="card-divider"></div>
+      <div class="card-body-text" id="card-body"></div><div class="card-tags-row" id="card-tags"></div>
+      <div class="card-list" id="card-list"></div><button class="card-cta-btn" id="card-cta"></button>
+    </div>
+  </div>
 </div>
-<div id="hud">
-  <span class="hud-hint">↑↓ Walk the corridor</span>
-  <span class="hud-dot"></span>
-  <span class="hud-hint">Click panels to connect</span>
-</div>
+
+<div id="nav-drawer"><div class="nav-section-label">Navigate the HQ</div><div class="nav-room-list" id="nav-room-list"></div><a class="nav-contact-btn" onclick="window.location.href='contact.html'">Start a Project</a></div>
+<div id="hud"><span class="hud-hint">↑↓ Walk · Drag to look around</span><span class="hud-dot"></span><span class="hud-hint">Tap panels to connect</span></div>
 <div id="mini-nav"><div class="mini-nav-inner" id="mini-nav-inner"></div></div>
 <div id="tooltip"></div>
-<div id="info-panel">
-  <div class="panel-tag" id="panel-tag"></div>
-  <div class="panel-title" id="panel-title"></div>
-  <div class="panel-subtitle" id="panel-subtitle"></div>
-  <div class="panel-divider"></div>
-  <div class="panel-body" id="panel-body"></div>
-  <div class="panel-tags" id="panel-tags"></div>
-  <div class="panel-items" id="panel-items"></div>
-  <a class="panel-cta" id="panel-cta"></a>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="hq.js"></script>
 <script>
-  window.addEventListener('load', function() {
-    setTimeout(function() {
-      var o = document.getElementById('contact-overlay');
-      if (o) o.classList.add('visible');
-    }, 2600);
-  });
-
-  function handleContactSubmit(e) {
-    e.preventDefault();
-    var name = document.getElementById('cName').value.trim();
-    var email = document.getElementById('cEmail').value.trim();
-    var msg = document.getElementById('cMsg').value.trim();
-    if (!name || !email || !msg) { alert('Please fill in Name, Email, and Message.'); return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email address.'); return; }
-    var service = document.getElementById('cService').value;
-    var waText = encodeURIComponent('Hi E\u00B3 SME, I\'m ' + name + '. ' + (service ? 'Looking for: ' + service + '. ' : '') + msg);
-    var waLink = document.getElementById('success-wa-link');
-    if (waLink) waLink.href = 'https://wa.me/2347042776167?text=' + waText;
-    document.getElementById('hq-contact-form').style.display = 'none';
-    ['contact-eyebrow','contact-title','contact-sub'].forEach(function(id) {
-      var el = document.querySelector('.' + id); if (el) el.style.display = 'none';
-    });
-    document.querySelector('.contact-links').style.display = 'none';
-    document.getElementById('success-msg').classList.add('show');
-  }
+window.addEventListener('load', function() {
+  setTimeout(function() {
+    var o = document.getElementById('contact-overlay');
+    if (o) o.classList.add('visible');
+  }, 2700);
+});
+function handleContactSubmit(e) {
+  e.preventDefault();
+  var name=document.getElementById('cName').value.trim();
+  var email=document.getElementById('cEmail').value.trim();
+  var msg=document.getElementById('cMsg').value.trim();
+  if(!name||!email||!msg){alert('Please fill in Name, Email, and Message.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert('Please enter a valid email address.');return;}
+  var service=document.getElementById('cService').value;
+  var waText=encodeURIComponent('Hi E³ SME, I\'m '+name+'. '+(service?'Looking for: '+service+'. ':'')+msg);
+  var waLink=document.getElementById('success-wa-link');
+  if(waLink) waLink.href='https://wa.me/2347042776167?text='+waText;
+  document.getElementById('hq-contact-form').style.display='none';
+  document.querySelector('.contact-eyebrow').style.display='none';
+  document.querySelector('.contact-title').style.display='none';
+  document.querySelector('.contact-sub').style.display='none';
+  document.querySelector('.contact-links').style.display='none';
+  document.getElementById('success-msg').classList.add('show');
+}
 </script>
 </body>
 </html>
