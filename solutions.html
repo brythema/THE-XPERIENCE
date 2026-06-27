@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>E³ HQ — Solutions Wing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="hq.css">
+<style>:root{--accent:#00c2ff;--accent-dim:rgba(0,194,255,0.10);--accent-border:rgba(0,194,255,0.25);}</style>
+<script>
+window.ROOM_CONFIG = {
+  id: 'solutions',
+  items: [
+    {
+      type: 'panel',
+      img: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80',
+      title: 'AI Automation',
+      subtitle: 'Systems that work while you sleep',
+      tag: 'Service 01',
+      body: 'We design and deploy AI automation pipelines tailored to your business — from lead qualification and customer service to document processing and reporting. Reduce manual work by up to 80%.',
+      tags: ['LLM Integration', 'Workflow AI', 'Process Automation', 'ChatBots'],
+      listItems: [
+        { label: 'AI-Powered Customer Support' },
+        { label: 'Document & Data Automation' },
+        { label: 'Sales Pipeline Intelligence' },
+        { label: 'Custom AI Assistants' }
+      ],
+      cta: { label: 'Start an AI Project →', href: 'contact.html' }
+    },
+    {
+      type: 'panel',
+      img: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80',
+      title: 'Custom Web Development',
+      subtitle: 'Engineered for performance',
+      tag: 'Service 02',
+      body: 'Premium websites and web applications built from scratch. No templates, no shortcuts. Every project is mobile-first, QA-verified and optimised for Nigerian network conditions.',
+      tags: ['React', 'Next.js', 'Vanilla JS', 'HTML/CSS', 'SEO'],
+      listItems: [
+        { label: 'Business & Corporate Sites' },
+        { label: 'E-Commerce Platforms' },
+        { label: 'Landing Pages & Funnels' },
+        { label: 'Web Applications' }
+      ],
+      cta: { label: 'Get a Website →', href: 'contact.html' }
+    },
+    {
+      type: 'panel',
+      img: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80',
+      title: 'Mobile App Development',
+      subtitle: 'iOS & Android, built right',
+      tag: 'Service 03',
+      body: 'Cross-platform mobile apps built with React Native and Expo. Full-featured, production-ready, and submitted to App Store and Google Play. From MVP to enterprise-grade.',
+      tags: ['React Native', 'Expo', 'iOS', 'Android', 'Zustand'],
+      listItems: [
+        { label: 'Business Apps' },
+        { label: 'E-Commerce Mobile' },
+        { label: 'SaaS Companion Apps' },
+        { label: 'Internal Tools' }
+      ],
+      cta: { label: 'Build Your App →', href: 'contact.html' }
+    },
+    {
+      type: 'panel',
+      img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
+      title: 'Industry SaaS Platforms',
+      subtitle: 'Software built for your sector',
+      tag: 'Service 04',
+      body: 'We build industry-specific software — verification platforms, pharmacy management systems, real estate portals, school management tools. Purpose-built, not generic.',
+      tags: ['SaaS', 'Dashboards', 'Supabase', 'PostgreSQL', 'APIs'],
+      listItems: [
+        { label: 'Verification & Compliance Tools' },
+        { label: 'Healthcare Platforms' },
+        { label: 'Real Estate Systems' },
+        { label: 'Education Platforms' }
+      ],
+      cta: { label: 'Discuss a SaaS Build →', href: 'contact.html' }
+    },
+    {
+      type: 'panel',
+      img: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80',
+      title: 'Digital Strategy & Design',
+      subtitle: 'Direction before execution',
+      tag: 'Service 05',
+      body: 'Brand identity, UI/UX design, product strategy and go-to-market planning. We help you think clearly before you build expensively.',
+      tags: ['Brand Identity', 'UI/UX', 'Product Strategy', 'Figma'],
+      listItems: [
+        { label: 'Brand Identity Systems' },
+        { label: 'UI/UX Design' },
+        { label: 'Product Road Mapping' },
+        { label: 'Go-to-Market Planning' }
+      ],
+      cta: { label: 'Start with Strategy →', href: 'contact.html' }
+    }
+  ]
+};
+</script>
+</head>
+<body>
+<div id="loader">
+  <div class="loader-logo">E<span>³</span></div>
+  <div class="loader-tagline">Solutions Wing</div>
+  <div class="loader-bar"><div class="loader-bar-fill" id="load-bar"></div></div>
+  <div class="loader-pct" id="load-pct">0%</div>
+</div>
+<div id="canvas-wrap"></div>
+<div id="room-transition" style="opacity:1;pointer-events:all;background:#04050a;position:fixed;inset:0;z-index:150;"></div>
+<div id="topbar">
+  <div class="hq-logo" style="cursor:pointer">E<span>³</span></div>
+  <div class="room-name">⚙️ Solutions Wing</div>
+  <button class="hq-hamburger" aria-label="Navigation"><span></span><span></span><span></span></button>
+</div>
+<button id="back-btn">← Back</button>
+<div id="nav-drawer">
+  <div class="nav-section-label">Navigate the HQ</div>
+  <div class="nav-room-list" id="nav-room-list"></div>
+  <a class="nav-contact-btn" onclick="window.location.href='contact.html'">Start a Project</a>
+</div>
+<div id="hud">
+  <span class="hud-hint">↑↓ Walk the corridor</span>
+  <span class="hud-dot"></span>
+  <span class="hud-hint">Click panels to explore</span>
+</div>
+<div id="mini-nav"><div class="mini-nav-inner" id="mini-nav-inner"></div></div>
+<div id="tooltip"></div>
+<div id="info-panel">
+  <div class="panel-tag" id="panel-tag"></div>
+  <div class="panel-title" id="panel-title"></div>
+  <div class="panel-subtitle" id="panel-subtitle"></div>
+  <div class="panel-divider"></div>
+  <div class="panel-body" id="panel-body"></div>
+  <div class="panel-tags" id="panel-tags"></div>
+  <div class="panel-items" id="panel-items"></div>
+  <a class="panel-cta" id="panel-cta"></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="hq.js"></script>
+</body>
+</html>
