@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>E³ HQ — The Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="hq.css">
+<style>:root{--accent:#a78bfa;--accent-dim:rgba(167,139,250,0.10);--accent-border:rgba(167,139,250,0.25);}</style>
+<script>
+window.ROOM_CONFIG = {
+  id: 'insights',
+  items: [
+    {
+      type: 'panel',
+      img: 'https://images.unsplash.com/photo-1432888622747-4eb9a8efbc07?w=800&q=80',
+      title: 'Why Your Website Is Losing You Money',
+      subtitle: 'Web Strategy · 8 min read',
+      tag: 'Insights',
+      body: 'Most Nigerian SME websites are digital brochures — they look fine but don\'t convert. This piece breaks down the five structural problems costing businesses leads every single day, and how to fix each one.',
+      tags: ['Web Strategy', 'Conversion', 'Nigerian Market', 'SME'],
+      cta: { label: 'Read Article →', href: 'contact.html' }
+    },
+    {
+      type: 'panel',
+      img: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80',
+      title: 'The AI Opportunity African SMEs Are Missing',
+      subtitle: 'AI & Automation · 6 min read',
+      tag: 'Insights',
+      body: 'AI is not a luxury for big corporations. This article explores five practical ways small and medium businesses across Africa are already using AI to automate repetitive work, serve customers faster, and compete at scale.',
+      tags: ['AI', 'Automation', 'Africa', 'SME Strategy'],
+      cta: { label: 'Read Article →', href: 'contact.html' }
+    },
+    {
+      type: 'panel',
+      img: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80',
+      title: 'Mobile-First Is Not Enough Anymore',
+      subtitle: 'Product Design · 5 min read',
+      tag: 'Insights',
+      body: 'Designing for mobile-first was the standard five years ago. Today the bar is higher — performance, low-bandwidth resilience, and one-thumb navigation aren\'t optional in the African mobile market.',
+      tags: ['Mobile', 'Performance', 'Africa', 'UX'],
+      cta: { label: 'Read Article →', href: 'contact.html' }
+    },
+    {
+      type: 'panel',
+      img: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80',
+      title: 'How We Build: The E³ Process',
+      subtitle: 'Behind the Build · 7 min read',
+      tag: 'Insights',
+      body: 'From discovery to deployment, every E³ project follows a documented process. This transparency piece walks through how we move from brief to launch — including our QA system and how we handle revisions.',
+      tags: ['Process', 'Development', 'QA', 'Transparency'],
+      cta: { label: 'Read Article →', href: 'contact.html' }
+    },
+    {
+      type: 'panel',
+      img: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80',
+      title: 'WhatsApp as a Commerce Channel',
+      subtitle: 'Nigerian E-Commerce · 5 min read',
+      tag: 'Insights',
+      body: 'WhatsApp is already the dominant commerce channel for many Nigerian SMEs. This article explores how to build a proper WhatsApp funnel from your website — with pre-filled context, smart routing, and conversion-optimised messaging.',
+      tags: ['WhatsApp', 'Commerce', 'Nigeria', 'Conversion'],
+      cta: { label: 'Read Article →', href: 'contact.html' }
+    }
+  ]
+};
+</script>
+</head>
+<body>
+<div id="loader">
+  <div class="loader-logo">E<span>³</span></div>
+  <div class="loader-tagline">The Library</div>
+  <div class="loader-bar"><div class="loader-bar-fill" id="load-bar"></div></div>
+  <div class="loader-pct" id="load-pct">0%</div>
+</div>
+<div id="canvas-wrap"></div>
+<div id="room-transition" style="opacity:1;pointer-events:all;background:#04050a;position:fixed;inset:0;z-index:150;"></div>
+<div id="topbar">
+  <div class="hq-logo" style="cursor:pointer">E<span>³</span></div>
+  <div class="room-name">📖 The Library</div>
+  <button class="hq-hamburger" aria-label="Navigation"><span></span><span></span><span></span></button>
+</div>
+<button id="back-btn">← Back</button>
+<div id="nav-drawer">
+  <div class="nav-section-label">Navigate the HQ</div>
+  <div class="nav-room-list" id="nav-room-list"></div>
+  <a class="nav-contact-btn" onclick="window.location.href='contact.html'">Start a Project</a>
+</div>
+<div id="hud">
+  <span class="hud-hint">↑↓ Walk the corridor</span>
+  <span class="hud-dot"></span>
+  <span class="hud-hint">Click to open an article</span>
+</div>
+<div id="mini-nav"><div class="mini-nav-inner" id="mini-nav-inner"></div></div>
+<div id="tooltip"></div>
+<div id="info-panel">
+  <div class="panel-tag" id="panel-tag"></div>
+  <div class="panel-title" id="panel-title"></div>
+  <div class="panel-subtitle" id="panel-subtitle"></div>
+  <div class="panel-divider"></div>
+  <div class="panel-body" id="panel-body"></div>
+  <div class="panel-tags" id="panel-tags"></div>
+  <div class="panel-items" id="panel-items"></div>
+  <a class="panel-cta" id="panel-cta"></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="hq.js"></script>
+</body>
+</html>
