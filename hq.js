@@ -857,18 +857,40 @@
     constructor() {
       this.lastX=0; this.lastY=0; this.vel=0; this.dragging=false;
       this.startX=0; this.startY=0; this.moved=false; this.startTime=0;
+      this.pinching=false; this.lastPinchDist=0;
       const el = document.getElementById('canvas-wrap');
       el.addEventListener('touchstart', e=>this._s(e), {passive:true});
       el.addEventListener('touchmove',  e=>this._m(e), {passive:true});
       el.addEventListener('touchend',   e=>this._e(e), {passive:true});
+      el.addEventListener('touchcancel',e=>this._e(e), {passive:true});
     }
+    _dist(t0, t1) { return Math.hypot(t1.clientX-t0.clientX, t1.clientY-t0.clientY); }
     _s(e) {
+      if (e.touches.length >= 2) {
+        // Entering (or staying in) pinch mode — stop single-finger look-drag.
+        this.dragging = false;
+        this.pinching = true;
+        this.lastPinchDist = this._dist(e.touches[0], e.touches[1]);
+        return;
+      }
       const t=e.touches[0]; if(!t)return;
+      this.pinching=false;
       this.startX=this.lastX=t.clientX; this.startY=this.lastY=t.clientY;
       this.vel=0; this.dragging=true; this.moved=false; this.startTime=Date.now();
     }
     _m(e) {
-      if(!this.dragging)return;
+      if (e.touches.length >= 2) {
+        if (state!=='exploring' || cardOpen) return;
+        this.dragging = false;
+        this.pinching = true;
+        const d = this._dist(e.touches[0], e.touches[1]);
+        const delta = d - this.lastPinchDist; // >0 = fingers spreading (pinch-out) = move forward
+        camTargetZ = clamp(camTargetZ - delta*0.018, -42, 7.2);
+        this.lastPinchDist = d;
+        this.moved = true;
+        return;
+      }
+      if(!this.dragging || this.pinching)return;
       const t=e.touches[0]; if(!t)return;
       const dx=t.clientX-this.lastX, dy=t.clientY-this.lastY;
       if(Math.hypot(t.clientX-this.startX,t.clientY-this.startY)>9) this.moved=true;
@@ -881,7 +903,22 @@
     }
     _e(e) {
       this.dragging=false;
-      if(!this.moved && Date.now()-this.startTime<300) {
+      // If any fingers remain after a pinch (e.g. lifted one of two), keep pinch state clean.
+      if (e.touches && e.touches.length >= 2) {
+        this.pinching = true;
+        this.lastPinchDist = this._dist(e.touches[0], e.touches[1]);
+        return;
+      }
+      const wasPinching = this.pinching;
+      this.pinching = false;
+      if (e.touches && e.touches.length === 1) {
+        // Transitioned from pinch down to one finger — re-anchor drag without treating it as a tap.
+        const t=e.touches[0];
+        this.startX=this.lastX=t.clientX; this.startY=this.lastY=t.clientY;
+        this.dragging=true; this.moved=true; this.startTime=0;
+        return;
+      }
+      if(!wasPinching && !this.moved && Date.now()-this.startTime<300) {
         const t=e.changedTouches[0]; if(!t)return;
         handleClick(t.clientX, t.clientY);
       }
