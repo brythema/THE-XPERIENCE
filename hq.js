@@ -380,8 +380,41 @@
 
     g.add(imgPlane);
 
-    // Label plate
-    const plateMat = new THREE.MeshStandardMaterial({ color:0x18150a, roughness:0.55, metalness:0.45 });
+    // Label plate — museum-style nameplate with CanvasTexture
+    const plaqueText = (item.plaque || item.title || '').toUpperCase();
+    const pc = document.createElement('canvas');
+    pc.width = 512; pc.height = 80;
+    const px = pc.getContext('2d');
+    px.clearRect(0, 0, pc.width, pc.height);
+    // Plate background
+    px.fillStyle = '#18150a';
+    px.fillRect(0, 0, pc.width, pc.height);
+    // Thin accent border top
+    px.fillStyle = '#' + R.accentHex.replace('#','');
+    px.fillRect(0, 0, pc.width, 2);
+    // Text
+    px.textAlign = 'center';
+    px.textBaseline = 'middle';
+    // Letter-spaced serif label
+    px.font = '600 22px Georgia, "Times New Roman", serif';
+    px.fillStyle = '#' + R.accentHex.replace('#','');
+    px.letterSpacing = '0.22em';
+    // Manual letter-spacing fallback for older canvas engines
+    const letters = plaqueText.split('');
+    const spacing = 6;
+    const totalW = px.measureText(plaqueText).width + spacing * Math.max(0, letters.length - 1);
+    let cx2 = (pc.width - totalW) / 2;
+    letters.forEach(ch => {
+      px.fillText(ch, cx2 + px.measureText(ch).width / 2, pc.height / 2 + 1);
+      cx2 += px.measureText(ch).width + spacing;
+    });
+    const plateTex = new THREE.CanvasTexture(pc);
+    plateTex.needsUpdate = true;
+    const plateMat = new THREE.MeshStandardMaterial({
+      map: plateTex,
+      roughness: 0.55, metalness: 0.45,
+      emissiveMap: plateTex, emissive: new THREE.Color(R.accentHex), emissiveIntensity: 0.08
+    });
     const plate = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.14, 0.018), plateMat);
     plate.position.set(0, -PH/2-B-0.1, 0);
     g.add(plate);
@@ -621,43 +654,67 @@
     document.getElementById('card-tag').textContent      = item.tag || R.label;
     document.getElementById('card-title').textContent    = item.title || '';
     document.getElementById('card-subtitle').textContent = item.subtitle || '';
-    document.getElementById('card-body').innerHTML       = item.body || '';
 
+    const bodyEl = document.getElementById('card-body');
     const tagsEl = document.getElementById('card-tags');
-    if (tagsEl) {
-      tagsEl.innerHTML = '';
-      (item.tags||[]).forEach(t => {
-        const p = document.createElement('span');
-        p.className = 'card-tag-pill'; p.textContent = t;
-        tagsEl.appendChild(p);
-      });
-    }
-
     const listEl = document.getElementById('card-list');
-    if (listEl) {
-      listEl.innerHTML = '';
-      (item.listItems||[]).forEach(li => {
-        const row = document.createElement('div');
-        row.className = 'card-list-item';
-        row.innerHTML = `<span class="card-list-dot">◆</span><span>${li.label}</span>`;
-        listEl.appendChild(row);
-      });
-    }
+    const ctaEl  = document.getElementById('card-cta');
 
-    const ctaEl = document.getElementById('card-cta');
-    if (ctaEl) {
-      if (item.cta) {
-        ctaEl.textContent = item.cta.label;
-        ctaEl.style.display = 'block';
-        ctaEl.onclick = () => {
-          closeCard();
-          const href = item.cta.href||'contact.html';
-          setTimeout(() => {
-            if (href.startsWith('http')) window.open(href,'_blank');
-            else navigateTo(href);
-          }, 400);
-        };
-      } else { ctaEl.style.display = 'none'; }
+    if (item.formHTML) {
+      // Embedded form variant: body text holds the form, hide list/tags/cta.
+      if (bodyEl) bodyEl.innerHTML = item.formHTML;
+      if (tagsEl) tagsEl.innerHTML = '';
+      if (listEl) listEl.innerHTML = '';
+      if (ctaEl)  { ctaEl.style.display = 'none'; ctaEl.onclick = null; }
+      if (item.onFormMount) item.onFormMount(bodyEl);
+    } else {
+      if (bodyEl) {
+        bodyEl.innerHTML = item.body || '';
+        // WhatsApp bold button injected below body text if flagged
+        if (item.whatsappBtn) {
+          const wa = document.createElement('a');
+          wa.href = 'https://wa.me/2347042776167';
+          wa.target = '_blank';
+          wa.rel = 'noopener';
+          wa.className = 'card-wa-btn';
+          wa.innerHTML = '<span class="card-wa-icon">&#9679;</span> Chat on WhatsApp';
+          bodyEl.appendChild(wa);
+        }
+      }
+
+      if (tagsEl) {
+        tagsEl.innerHTML = '';
+        (item.tags||[]).forEach(t => {
+          const p = document.createElement('span');
+          p.className = 'card-tag-pill'; p.textContent = t;
+          tagsEl.appendChild(p);
+        });
+      }
+
+      if (listEl) {
+        listEl.innerHTML = '';
+        (item.listItems||[]).forEach(li => {
+          const row = document.createElement('div');
+          row.className = 'card-list-item';
+          row.innerHTML = `<span class="card-list-dot">◆</span><span>${li.label}</span>`;
+          listEl.appendChild(row);
+        });
+      }
+
+      if (ctaEl) {
+        if (item.cta) {
+          ctaEl.textContent = item.cta.label;
+          ctaEl.style.display = 'block';
+          ctaEl.onclick = () => {
+            closeCard();
+            const href = item.cta.href||'contact.html';
+            setTimeout(() => {
+              if (href.startsWith('http')) window.open(href,'_blank');
+              else navigateTo(href);
+            }, 400);
+          };
+        } else { ctaEl.style.display = 'none'; ctaEl.onclick = null; }
+      }
     }
 
     el.classList.add('open');
@@ -786,6 +843,7 @@
           state = 'exploring';
           document.getElementById('hud')?.classList.add('visible');
           document.getElementById('mini-nav')?.classList.add('visible');
+          showGestureHint();
           if (soundEnabled || (isEntrance && false)) initSound();
         }
       });
@@ -851,6 +909,65 @@
   function toggleNavDrawer(){ document.getElementById('nav-drawer')?.classList.contains('open')?closeNavDrawer():openNavDrawer(); }
 
   /* ─────────────────────────────────────────
+     GESTURE HINT (mobile, first-visit only)
+  ───────────────────────────────────────── */
+  const GESTURE_HINT_KEY = 'e3hq_pinch_hint_seen';
+  let gestureHintTimer = null;
+  let gestureHintShown = false;
+
+  function isTouchDevice() {
+    return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  }
+
+  function buildGestureHint() {
+    if (document.getElementById('gesture-hint')) return;
+    const el = document.createElement('div');
+    el.id = 'gesture-hint';
+    el.innerHTML =
+      '<div class="gesture-hint-card">' +
+        '<span class="gesture-hint-icon gesture-hint-pinch-out">' +
+          '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+            '<path d="M8 8L4 4M4 4H7M4 4V7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' +
+            '<path d="M16 8L20 4M20 4H17M20 4V7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' +
+            '<path d="M8 16L4 20M4 20H7M4 20V17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' +
+            '<path d="M16 16L20 20M20 20H17M20 20V17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' +
+          '</svg>' +
+        '</span>' +
+        '<span class="gesture-hint-text">' +
+          '<span class="gesture-hint-label">Pinch to Walk</span>' +
+          '<span class="gesture-hint-sub">Spread fingers forward · Pinch in to step back</span>' +
+        '</span>' +
+      '</div>';
+    document.body.appendChild(el);
+  }
+
+  function showGestureHint() {
+    if (gestureHintShown) return;
+    if (!isTouchDevice()) return;
+    if (window.innerWidth > 768) return;
+    let seen = false;
+    try { seen = !!localStorage.getItem(GESTURE_HINT_KEY); } catch(e) {}
+    if (seen) return;
+
+    gestureHintShown = true;
+    buildGestureHint();
+    const el = document.getElementById('gesture-hint');
+    if (!el) return;
+    requestAnimationFrame(() => el.classList.add('visible'));
+    gestureHintTimer = setTimeout(dismissGestureHint, 4200);
+  }
+
+  function dismissGestureHint() {
+    if (gestureHintTimer) { clearTimeout(gestureHintTimer); gestureHintTimer = null; }
+    const el = document.getElementById('gesture-hint');
+    if (!el || !el.classList.contains('visible')) return;
+    el.classList.add('fading');
+    el.classList.remove('visible');
+    try { localStorage.setItem(GESTURE_HINT_KEY, '1'); } catch(e) {}
+    setTimeout(() => { el.remove(); }, 650);
+  }
+
+  /* ─────────────────────────────────────────
      INPUT
   ───────────────────────────────────────── */
   class TouchNavCtrl {
@@ -888,6 +1005,7 @@
         camTargetZ = clamp(camTargetZ - delta*0.018, -42, 7.2);
         this.lastPinchDist = d;
         this.moved = true;
+        if (Math.abs(delta) > 2) dismissGestureHint();
         return;
       }
       if(!this.dragging || this.pinching)return;
