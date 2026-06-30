@@ -10,14 +10,9 @@
 <link rel="stylesheet" href="hq.css">
 <style>
 :root{--accent:#c9a84c;--accent-dim:rgba(201,168,76,0.12);--accent-border:rgba(201,168,76,0.28);}
-#contact-overlay{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;padding:72px 20px 80px;pointer-events:none;opacity:0;transition:opacity 0.9s cubic-bezier(0.23,1,0.32,1);}
-#contact-overlay.visible{opacity:1;pointer-events:all;}
-.contact-card{background:rgba(4,5,10,0.90);backdrop-filter:blur(44px) saturate(0.65);-webkit-backdrop-filter:blur(44px) saturate(0.65);border:1px solid rgba(201,168,76,0.15);width:100%;max-width:500px;padding:36px 32px 36px;overflow-y:auto;max-height:calc(100vh - 130px);}
-.contact-card::-webkit-scrollbar{width:2px;}
-.contact-card::-webkit-scrollbar-thumb{background:rgba(201,168,76,0.2);}
-.contact-eyebrow{font-size:10px;letter-spacing:0.32em;text-transform:uppercase;color:#c9a84c;margin-bottom:8px;}
-.contact-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(20px,4vw,30px);font-weight:800;color:#e8e0cc;line-height:1.15;margin-bottom:6px;letter-spacing:-0.02em;}
-.contact-sub{font-size:13px;color:rgba(232,224,204,0.36);margin-bottom:28px;line-height:1.6;}
+
+/* Contact form, scoped to render inside the standard card body (#card-body) */
+.contact-form-eyebrow{font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:#c9a84c;margin-bottom:14px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
 .form-group{display:flex;flex-direction:column;gap:5px;margin-bottom:10px;}
 .form-group label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,224,204,0.3);}
@@ -31,39 +26,20 @@
 .contact-link-row{display:flex;align-items:center;gap:11px;text-decoration:none;color:rgba(232,224,204,0.36);font-size:13px;transition:color 0.2s;padding:4px 0;}
 .contact-link-row:hover{color:#e8e0cc;}
 .contact-link-icon{color:#c9a84c;font-size:14px;width:20px;flex-shrink:0;}
-.success-msg{display:none;text-align:center;padding:32px 0;}
+.success-msg{display:none;text-align:center;padding:20px 0 8px;}
 .success-msg.show{display:block;}
-.success-icon{font-size:34px;margin-bottom:14px;}
+.success-icon{font-size:34px;margin-bottom:14px;color:#c9a84c;}
 .success-title{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#e8e0cc;margin-bottom:7px;}
 .success-sub{font-size:13px;color:rgba(232,224,204,0.36);margin-bottom:22px;}
 .success-wa{display:inline-block;border:1px solid rgba(201,168,76,0.35);color:#c9a84c;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;padding:11px 22px;text-decoration:none;transition:background 0.2s;}
 .success-wa:hover{background:rgba(201,168,76,0.08);}
-@media(max-width:480px){.contact-card{padding:24px 16px 28px;}.form-row{grid-template-columns:1fr;}}
-@media(max-width:768px){#contact-overlay{padding:68px 12px 100px;align-items:flex-start;overflow-y:auto;}.contact-card{max-height:none;}}
+@media(max-width:480px){.form-row{grid-template-columns:1fr;}}
 </style>
 <script>
-window.ROOM_CONFIG = {
-  id: 'contact',
-  items: [
-    { img:'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=900&q=80', title:'Start a Project', subtitle:'Let\'s build something exceptional', tag:'Contact E³', body:'Tell us what you\'re building. We\'ll tell you how we\'d approach it. Every great product started with a conversation.', tags:['Quick Response','Abuja, Nigeria','< 24hr Reply'], cta:{label:'Open Contact Form',href:'#form'} },
-    { img:'https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=900&q=80', title:'WhatsApp Direct', subtitle:'Fastest response channel', tag:'Connect', body:'Message us directly on WhatsApp. Available Monday–Saturday, 9am–8pm WAT. Most messages get a response within the hour.', tags:['+234 704 277 6167','Mon–Sat','9am–8pm WAT'], cta:{label:'Open WhatsApp →',href:'https://wa.me/2347042776167'} },
-    { img:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80', title:'Abuja, Nigeria', subtitle:'Our home base', tag:'Location', body:'Based in Abuja, FCT, Nigeria — working with clients across Nigeria and the broader African continent. Remote projects always welcome.', tags:['Abuja FCT','Nigeria','Remote-Friendly','Pan-African'], cta:{label:'Get Directions →',href:'https://maps.google.com/?q=Abuja+FCT+Nigeria'} }
-  ]
-};
-</script>
-</head>
-<body>
-<div id="loader"><div class="loader-logo">E<span>³</span></div><div class="loader-tagline">Executive Rooftop</div><div class="loader-bar"><div class="loader-bar-fill" id="load-bar"></div></div><div class="loader-pct" id="load-pct">0%</div></div>
-<div id="canvas-wrap"></div>
-<div id="room-transition" style="position:fixed;inset:0;z-index:150;background:#04050a;opacity:1;pointer-events:all;"></div>
-
-<!-- CONTACT FORM OVERLAY -->
-<div id="contact-overlay">
-  <div class="contact-card">
+function buildContactFormHTML() {
+  return `
+    <div class="contact-form-eyebrow">Tell us what you need. We respond within 24 hours.</div>
     <div id="contact-form-wrap">
-      <div class="contact-eyebrow">Executive Rooftop · E³ HQ</div>
-      <div class="contact-title">Start a Project</div>
-      <div class="contact-sub">Tell us what you need. We respond within 24 hours.</div>
       <form onsubmit="handleContactSubmit(event)" id="hq-contact-form" novalidate>
         <div class="form-row">
           <div class="form-group"><label for="cName">Full Name *</label><input id="cName" type="text" placeholder="Your name" required autocomplete="name"></div>
@@ -95,8 +71,40 @@ window.ROOM_CONFIG = {
       <div class="success-sub">We'll respond within 24 hours.<br>Or reach us instantly on WhatsApp.</div>
       <a class="success-wa" id="success-wa-link" href="https://wa.me/2347042776167" target="_blank" rel="noopener">Continue on WhatsApp →</a>
     </div>
-  </div>
-</div>
+  `;
+}
+
+function handleContactSubmit(e) {
+  e.preventDefault();
+  var name=document.getElementById('cName').value.trim();
+  var email=document.getElementById('cEmail').value.trim();
+  var msg=document.getElementById('cMsg').value.trim();
+  if(!name||!email||!msg){alert('Please fill in Name, Email, and Message.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert('Please enter a valid email address.');return;}
+  var service=document.getElementById('cService').value;
+  var waText=encodeURIComponent('Hi E³ SME, I\'m '+name+'. '+(service?'Looking for: '+service+'. ':'')+msg);
+  var waLink=document.getElementById('success-wa-link');
+  if(waLink) waLink.href='https://wa.me/2347042776167?text='+waText;
+  var wrap=document.getElementById('contact-form-wrap');
+  if(wrap) wrap.style.display='none';
+  var success=document.getElementById('success-msg');
+  if(success) success.classList.add('show');
+}
+
+window.ROOM_CONFIG = {
+  id: 'contact',
+  items: [
+    { img:'https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=900&q=80', title:'Start a Project', subtitle:'Let\'s build something exceptional', tag:'Contact E³', plaque:'FORM', formHTML: buildContactFormHTML() },
+    { img:'https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=900&q=80', title:'Staff Chat', subtitle:'Fastest response channel', tag:'WhatsApp', plaque:'STAFF CHAT', body:'Message us directly on WhatsApp. Available Monday–Saturday, 9am–8pm WAT. Most messages get a response within the hour.', tags:['+234 704 277 6167','Mon–Sat','9am–8pm WAT'], whatsappBtn:true, cta:{label:'Open WhatsApp →',href:'https://wa.me/2347042776167'} },
+    { img:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80', title:'Abuja, Nigeria', subtitle:'Our home base', tag:'Location', plaque:'LOCATION', body:'Based in Abuja, FCT, Nigeria — working with clients across Nigeria and the broader African continent. Remote projects always welcome.', tags:['Abuja FCT','Nigeria','Remote-Friendly','Pan-African'], cta:{label:'Get Directions →',href:'https://maps.google.com/?q=Abuja+FCT+Nigeria'} }
+  ]
+};
+</script>
+</head>
+<body>
+<div id="loader"><div class="loader-logo">E<span>³</span></div><div class="loader-tagline">Executive Rooftop</div><div class="loader-bar"><div class="loader-bar-fill" id="load-bar"></div></div><div class="loader-pct" id="load-pct">0%</div></div>
+<div id="canvas-wrap"></div>
+<div id="room-transition" style="position:fixed;inset:0;z-index:150;background:#04050a;opacity:1;pointer-events:all;"></div>
 
 <div id="topbar">
   <div class="hq-logo" style="cursor:pointer">E<span>³</span></div>
@@ -130,31 +138,5 @@ window.ROOM_CONFIG = {
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="hq.js"></script>
-<script>
-window.addEventListener('load', function() {
-  setTimeout(function() {
-    var o = document.getElementById('contact-overlay');
-    if (o) o.classList.add('visible');
-  }, 2700);
-});
-function handleContactSubmit(e) {
-  e.preventDefault();
-  var name=document.getElementById('cName').value.trim();
-  var email=document.getElementById('cEmail').value.trim();
-  var msg=document.getElementById('cMsg').value.trim();
-  if(!name||!email||!msg){alert('Please fill in Name, Email, and Message.');return;}
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert('Please enter a valid email address.');return;}
-  var service=document.getElementById('cService').value;
-  var waText=encodeURIComponent('Hi E³ SME, I\'m '+name+'. '+(service?'Looking for: '+service+'. ':'')+msg);
-  var waLink=document.getElementById('success-wa-link');
-  if(waLink) waLink.href='https://wa.me/2347042776167?text='+waText;
-  document.getElementById('hq-contact-form').style.display='none';
-  document.querySelector('.contact-eyebrow').style.display='none';
-  document.querySelector('.contact-title').style.display='none';
-  document.querySelector('.contact-sub').style.display='none';
-  document.querySelector('.contact-links').style.display='none';
-  document.getElementById('success-msg').classList.add('show');
-}
-</script>
 </body>
 </html>
